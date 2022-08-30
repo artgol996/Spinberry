@@ -1,0 +1,42 @@
+.radio[data-v-2d51d117]::before {
+  content: "";
+  --tw-bg-opacity: 1 !important;
+  background-color: rgba(73, 86, 227, var(--tw-bg-opacity)) !important;
+  border-radius: 9999px !important;
+  display: block !important;
+  height: 6px !important;
+  margin: 4px !important;
+  width: 6px !important;
+  --tw-translate-x: 0 !important;
+  --tw-translate-y: 0 !important;
+  --tw-translate-z: 0 !important;
+  --tw-rotate: 0 !important;
+  --tw-rotate-x: 0 !important;
+  --tw-rotate-y: 0 !important;
+  --tw-rotate-z: 0 !important;
+  --tw-skew-x: 0 !important;
+  --tw-skew-y: 0 !important;
+  --tw-scale-x: 1 !important;
+  --tw-scale-y: 1 !important;
+  --tw-scale-z: 1 !important;
+  -webkit-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) translateZ(var(--tw-translate-z)) rotate(var(--tw-rotate)) rotateX(var(--tw-rotate-x)) rotateY(var(--tw-rotate-y)) rotateZ(var(--tw-rotate-z)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) scaleZ(var(--tw-scale-z)) !important;
+  -ms-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) translateZ(var(--tw-translate-z)) rotate(var(--tw-rotate)) rotateX(var(--tw-rotate-x)) rotateY(var(--tw-rotate-y)) rotateZ(var(--tw-rotate-z)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) scaleZ(var(--tw-scale-z)) !important;
+  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) translateZ(var(--tw-translate-z)) rotate(var(--tw-rotate)) rotateX(var(--tw-rotate-x)) rotateY(var(--tw-rotate-y)) rotateZ(var(--tw-rotate-z)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) scaleZ(var(--tw-scale-z)) !important;
+  --tw-scale-x: 0 !important;
+  --tw-scale-y: 0 !important;
+  --tw-scale-z: 0 !important;
+  -webkit-transition-property: -webkit-transform !important;
+  -o-transition-property: transform !important;
+  transition-property: transform, -webkit-transform !important;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  -o-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  -webkit-transition-duration: 150ms !important;
+  -o-transition-duration: 150ms !important;
+  transition-duration: 150ms !important;
+}
+.radio[data-v-2d51d117]:checked::before {
+  --tw-scale-x: 1 !important;
+  --tw-scale-y: 1 !important;
+  --tw-scale-z: 1 !important;
+}

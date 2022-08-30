@@ -1,0 +1,114 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Subscription = void 0;
+const nexus_1 = require("nexus");
+const _1 = require(".");
+const gql_Spec_1 = require("./gql-Spec");
+exports.Subscription = (0, nexus_1.subscriptionType)({
+    definition(t) {
+        t.field('authChange', {
+            type: _1.Query,
+            description: 'Triggered when the auth state changes',
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('authChange', { sendInitial: false }),
+            resolve: (source, args, ctx) => {
+                return {
+                    requestPolicy: 'network-only',
+                };
+            },
+        });
+        t.field('errorWarningChange', {
+            type: _1.Query,
+            description: 'Triggered when the base error or warning state changes',
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('errorWarningChange'),
+            resolve: (source, args, ctx) => ({}),
+        });
+        t.field('devChange', {
+            type: _1.DevState,
+            description: 'Issued for internal development changes',
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('devChange'),
+            resolve: (source, args, ctx) => ctx.coreData.dev,
+        });
+        t.field('cloudViewerChange', {
+            type: _1.Query,
+            description: 'Triggered when there is a change to the info associated with the cloud project (org added, project added)',
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('cloudViewerChange', { sendInitial: false }),
+            resolve: (source, args, ctx) => {
+                return {
+                    requestPolicy: 'network-only',
+                };
+            },
+        });
+        t.field('browserStatusChange', {
+            type: _1.CurrentProject,
+            description: 'Status of the currently opened browser',
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('browserStatusChange'),
+            resolve: (source, args, ctx) => ctx.lifecycleManager,
+        });
+        t.field('configChange', {
+            type: _1.CurrentProject,
+            description: 'Issued when cypress.config.js is re-executed due to a change',
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('configChange'),
+            resolve: (source, args, ctx) => ctx.lifecycleManager,
+        });
+        t.field('specsChange', {
+            type: _1.CurrentProject,
+            description: 'Issued when the watched specs for the project changes',
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('specsChange'),
+            resolve: (source, args, ctx) => ctx.lifecycleManager,
+        });
+        t.field('gitInfoChange', {
+            type: (0, nexus_1.list)(gql_Spec_1.Spec),
+            description: 'When the git info has refreshed for some or all of the specs, we fire this event with the specs updated',
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('gitInfoChange'),
+            resolve: (absolutePaths, args, ctx) => {
+                // Send back the git info for all specs on subscribe
+                if (absolutePaths === undefined) {
+                    return ctx.project.specs;
+                }
+                const pathsToSend = new Set(absolutePaths);
+                return ctx.project.specs.filter((s) => pathsToSend.has(s.absolute));
+            },
+        });
+        t.field('branchChange', {
+            type: _1.CurrentProject,
+            description: 'Issued when the current branch of a project changes',
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('branchChange'),
+            resolve: (source, args, ctx) => ctx.lifecycleManager,
+        });
+        t.nonNull.field('pushFragment', {
+            description: 'When we have resolved a section of a query, and want to update the local normalized cache, we "push" the fragment to the frontend to merge in the client side cache',
+            type: (0, nexus_1.list)((0, nexus_1.nonNull)((0, nexus_1.objectType)({
+                name: 'PushFragmentPayload',
+                definition(t) {
+                    t.nonNull.string('target');
+                    t.nonNull.json('fragment');
+                    t.json('data', {
+                        description: 'Raw data associated with the fragment to be written into the cache',
+                    });
+                    t.json('variables', {
+                        description: 'Variables associated with the fragment',
+                    });
+                    t.json('errors', {
+                        description: 'Any errors encountered when executing the operation',
+                    });
+                    t.boolean('invalidateCache', {
+                        description: 'If present, indicates we need to invalidate the client-side cache',
+                    });
+                },
+            }))),
+            subscribe: (source, args, ctx) => ctx.emitter.subscribeTo('pushFragment', { sendInitial: false }),
+            resolve: (source, args, ctx) => source,
+        });
+        t.string('startPollingForSpecs', {
+            args: {
+                projectId: (0, nexus_1.stringArg)(),
+                branchName: (0, nexus_1.stringArg)(),
+            },
+            description: 'Initiates the polling mechanism with the Cypress Cloud to check if we should refetch specs, and mark specs as stale if we have updates',
+            subscribe: (source, args, ctx) => {
+                return ctx.remotePolling.subscribeAndPoll(args.branchName, args.projectId);
+            },
+            resolve: (o) => o,
+        });
+    },
+});

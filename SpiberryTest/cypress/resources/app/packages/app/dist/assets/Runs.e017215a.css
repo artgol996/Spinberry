@@ -1,0 +1,17 @@
+li[data-v-c0af3e52]:not(:first-child)::before {
+  content: '.';
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+  margin-top: -8px !important;
+  padding-right: 8px !important;
+  --tw-text-opacity: 1 !important;
+  color: rgba(175, 179, 199, var(--tw-text-opacity)) !important;
+}ol li[data-v-4bd994bc]::marker {
+  --tw-text-opacity: 1 !important;
+  color: rgba(46, 50, 71, var(--tw-text-opacity)) !important;
+}.fade-enter-active[data-v-2e546d2f], .fade-leave-active[data-v-2e546d2f] {
+  transition: opacity .3s;
+}
+.fade-enter-from[data-v-2e546d2f], .fade-leave-to[data-v-2e546d2f] {
+  opacity: 0;
+}
